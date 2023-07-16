@@ -40,11 +40,11 @@ class _HomeState extends State<Home> {
     ).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(String txTitle, double txAmount,DateTime pickedDate) {
     final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: pickedDate,
       id: DateTime.now().toString(),
     );
 
