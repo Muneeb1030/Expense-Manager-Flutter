@@ -1,5 +1,7 @@
+import 'package:expensemanager/Widgets/Chart.dart';
 import 'package:flutter/material.dart';
 
+import '../Widgets/Chart.dart';
 import '../Models/Transection.dart';
 import '../Widgets/Newtransection.dart';
 import '../Widgets/transectionlist.dart';
@@ -26,6 +28,17 @@ class _HomeState extends State<Home> {
     //   date: DateTime.now(),
     // ),
   ];
+  List<Transaction> get _recentTranactions {
+    return userTransactions.where(
+      (element) {
+        return element.date.isAfter(
+          DateTime.now().subtract(
+            Duration(days: 7),
+          ),
+        );
+      },
+    ).toList();
+  }
 
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -69,13 +82,7 @@ class _HomeState extends State<Home> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Text('CHART!'),
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTranactions),
             userTransactions.length == 0
                 ? Container(
                     padding: EdgeInsets.only(top: 40),
