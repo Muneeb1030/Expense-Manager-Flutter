@@ -26,6 +26,7 @@ flutter:
 
   assets:
     - images/logo.png
+    - images/waiting.png
   #   - images/a_dot_ham.jpeg
 
   fonts:

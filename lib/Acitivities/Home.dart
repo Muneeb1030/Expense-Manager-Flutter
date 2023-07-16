@@ -13,18 +13,18 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final List<Transaction> userTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Weekly Groceries',
-      amount: 16.53,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 't1',
+    //   title: 'New Shoes',
+    //   amount: 69.99,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'Weekly Groceries',
+    //   amount: 16.53,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   void _addNewTransaction(String txTitle, double txAmount) {
@@ -72,12 +72,32 @@ class _HomeState extends State<Home> {
             Container(
               width: double.infinity,
               child: Card(
-                color: Colors.blue,
                 child: Text('CHART!'),
                 elevation: 5,
               ),
             ),
-            TransactionList(userTransactions),
+            userTransactions.length == 0
+                ? Container(
+                    padding: EdgeInsets.only(top: 40),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "No Transections",
+                          style: TextStyle(fontSize: 28),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Image(
+                          image: AssetImage("images/waiting.png"),
+                          width: 400,
+                          height: 400,
+                        ),
+                      ],
+                    ),
+                  )
+                : TransactionList(userTransactions)
           ],
         ),
       ),
