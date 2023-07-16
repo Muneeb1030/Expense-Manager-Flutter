@@ -40,7 +40,8 @@ class _HomeState extends State<Home> {
     ).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount,DateTime pickedDate) {
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime pickedDate) {
     final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
@@ -64,6 +65,12 @@ class _HomeState extends State<Home> {
         );
       },
     );
+  }
+
+  void _DeleteTransaction(String id) {
+    setState(() {
+      userTransactions.removeWhere((element) => element.id == id);
+    });
   }
 
   @override
@@ -104,7 +111,7 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   )
-                : TransactionList(userTransactions)
+                : TransactionList(userTransactions,_DeleteTransaction)
           ],
         ),
       ),

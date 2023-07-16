@@ -5,8 +5,9 @@ import '../Models/Transection.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function deleteTransaction;
 
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.deleteTransaction);
 
   @override
   Widget build(BuildContext context) {
@@ -14,50 +15,42 @@ class TransactionList extends StatelessWidget {
       height: 450,
       child: ListView.builder(
         itemBuilder: (ctx, index) {
-          return Card(
-            color: Color.fromARGB(255, 236, 236, 234),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 15,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 2,
-                      color: Theme.of(context).colorScheme.tertiary,
-                    ),
-                  ),
-                  padding: EdgeInsets.all(10),
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Color.fromARGB(255, 236, 236, 234),
+              radius: 30,
+              child: Padding(
+                padding: EdgeInsets.all(6),
+                child: FittedBox(
                   child: Text(
                     '\$${transactions[index].amount.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      transactions[index].title,
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      DateFormat.yMMMd().format(transactions[index].date),
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).colorScheme.tertiary,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+              ),
+            ),
+            title: Text(
+              transactions[index].title,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            subtitle: Text(
+              DateFormat.yMMMd().format(transactions[index].date),
+              style: TextStyle(
+                fontSize: 18,
+                color: Theme.of(context).colorScheme.tertiary,
+              ),
+            ),
+            trailing: IconButton(
+              icon: Icon(Icons.delete),
+              color: Theme.of(context).colorScheme.primary,
+              onPressed: () => deleteTransaction(transactions[index].id),
             ),
           );
         },
