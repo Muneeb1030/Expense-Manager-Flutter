@@ -111,7 +111,7 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   )
-                : TransactionList(userTransactions,_DeleteTransaction)
+                : TransactionList(userTransactions, _DeleteTransaction)
           ],
         ),
       ),

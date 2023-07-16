@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ChartBar extends StatelessWidget {
-  const ChartBar({super.key});
+  final String label;
+  final double spendingAmount;
+  final double spendingPctOfTotal;
+
+  ChartBar(this.label, this.spendingAmount, this.spendingPctOfTotal);
 
   @override
   Widget build(BuildContext context) {
@@ -9,32 +13,42 @@ class ChartBar extends StatelessWidget {
       children: [
         Container(
           height: 20,
-          child: Text(
-            "Hello",
-            style: TextStyle(fontSize: 15),
+          child: FittedBox(
+            child: Text('\$${spendingAmount.toStringAsFixed(0)}'),
           ),
         ),
         SizedBox(
           height: 4,
         ),
-        Stack(
-          children: [
-            Container(
-              height: 70,
-              width: 15,
-              decoration: BoxDecoration(
-                border: Border.all(
-                    color: Theme.of(context).colorScheme.primary, width: 3),
-                borderRadius: BorderRadius.circular(10),
-                color: Color.fromARGB(255, 236, 236, 234),
+        Container(
+          height: 90,
+          width: 15,
+          child: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Theme.of(context).colorScheme.primary, width: 3),
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color.fromARGB(255, 236, 236, 234),
+                ),
               ),
-            ),
-          ],
+              FractionallySizedBox(
+                heightFactor: spendingPctOfTotal,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         SizedBox(
           height: 4,
         ),
-        Text("Hello")
+        Text(label)
       ],
     );
   }
