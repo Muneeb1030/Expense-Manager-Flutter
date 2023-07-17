@@ -43,13 +43,17 @@ class _HomeState extends State<Home> {
   void _StartAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: context,
-      builder: (_) {
-        return GestureDetector(
-          onTap: () {},
+      isScrollControlled: true, // only work on showModalBottomSheet function
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+      builder: (context) => Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Container(
+          height: 300, //height or you can use Get.width-100 to set height
           child: NewTransaction(_addNewTransaction),
-          behavior: HitTestBehavior.opaque,
-        );
-      },
+        ),
+      ),
     );
   }
 
@@ -87,7 +91,7 @@ class _HomeState extends State<Home> {
           children: <Widget>[
             Container(
               height: _height * 0.3,
-              child: Chart(_recentTranactions,_height),
+              child: Chart(_recentTranactions, _height),
             ),
             userTransactions.length == 0
                 ? Container(
