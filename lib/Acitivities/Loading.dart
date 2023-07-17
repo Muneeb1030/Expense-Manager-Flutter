@@ -42,20 +42,14 @@ class _LoadingState extends State<Loading> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Color.fromARGB(255, 241, 108, 38),
-              Color.fromARGB(255, 150, 39, 129)
-            ],
-          ),
+          color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image.asset(
               'images/logo.png',
+              color: Color.fromARGB(255, 236, 236, 234),
             ),
             SizedBox(
               height: 20,
@@ -64,14 +58,14 @@ class _LoadingState extends State<Loading> {
               "Expense Manager",
               style: TextStyle(
                 fontSize: 48,
-                color: Colors.white,
+                color: Color.fromARGB(255, 236, 236, 234),
               ),
             ),
             SizedBox(
               height: 80,
             ),
             SpinKitWave(
-              color: Colors.white70,
+              color: Color.fromARGB(255, 236, 236, 234),
               size: 60,
             )
           ],

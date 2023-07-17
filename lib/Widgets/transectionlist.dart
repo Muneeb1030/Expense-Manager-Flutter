@@ -6,13 +6,16 @@ import '../Models/Transection.dart';
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
   final Function deleteTransaction;
+  final double Height;
 
-  TransactionList(this.transactions, this.deleteTransaction);
+  TransactionList(this.transactions, this.deleteTransaction, this.Height);
 
   @override
   Widget build(BuildContext context) {
+    final _mediaQuery = MediaQuery.of(context);
+    final _height = Height;
     return Container(
-      height: 450,
+      height: _height * 0.7,
       child: ListView.builder(
         itemBuilder: (ctx, index) {
           return Card(

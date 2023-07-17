@@ -1,8 +1,15 @@
 import 'package:expensemanager/Acitivities/Loading.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  //Stop Rotation of Screen
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitDown,
+  //   DeviceOrientation.portraitUp,
+  // ]);
   runApp(const MyApp());
 }
 

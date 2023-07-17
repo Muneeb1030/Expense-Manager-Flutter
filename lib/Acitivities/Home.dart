@@ -1,7 +1,6 @@
 import 'package:expensemanager/Widgets/Chart.dart';
 import 'package:flutter/material.dart';
 
-import '../Widgets/Chart.dart';
 import '../Models/Transection.dart';
 import '../Widgets/Newtransection.dart';
 import '../Widgets/transectionlist.dart';
@@ -14,20 +13,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<Transaction> userTransactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'New Shoes',
-    //   amount: 69.99,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'Weekly Groceries',
-    //   amount: 16.53,
-    //   date: DateTime.now(),
-    // ),
-  ];
+  final List<Transaction> userTransactions = [];
   List<Transaction> get _recentTranactions {
     return userTransactions.where(
       (element) {
@@ -75,24 +61,37 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _StartAddNewTransaction(context),
-          ),
-        ],
+    final _appBar = AppBar(
+      title: Text(
+        'Expense Manager',
+        style: TextStyle(
+          fontSize: 28,
+        ),
       ),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _StartAddNewTransaction(context),
+        ),
+      ],
+    );
+    final _mediaQuery = MediaQuery.of(context);
+    final double _height = _mediaQuery.size.height -
+        _appBar.preferredSize.height -
+        _mediaQuery.padding.top;
+    return Scaffold(
+      appBar: _appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTranactions),
+            Container(
+              height: _height * 0.3,
+              child: Chart(_recentTranactions,_height),
+            ),
             userTransactions.length == 0
                 ? Container(
-                    padding: EdgeInsets.only(top: 40),
+                    padding: EdgeInsets.only(top: _height * 0.05),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -101,17 +100,16 @@ class _HomeState extends State<Home> {
                           style: TextStyle(fontSize: 28),
                         ),
                         SizedBox(
-                          height: 40,
+                          height: _height * 0.05,
                         ),
                         Image(
                           image: AssetImage("images/waiting.png"),
-                          width: 400,
-                          height: 400,
+                          height: _height * 0.3,
                         ),
                       ],
                     ),
                   )
-                : TransactionList(userTransactions, _DeleteTransaction)
+                : TransactionList(userTransactions, _DeleteTransaction, _height)
           ],
         ),
       ),
