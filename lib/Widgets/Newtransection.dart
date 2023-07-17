@@ -74,7 +74,7 @@ class _NewTransactionState extends State<NewTransaction> {
               onSubmitted: (_) => submitData(),
             ),
             SizedBox(
-              height: 15,
+              height: 10,
             ),
             Row(
               children: [
@@ -105,7 +105,7 @@ class _NewTransactionState extends State<NewTransaction> {
               ],
             ),
             SizedBox(
-              height: 25,
+              height: 20,
             ),
             ElevatedButton(
               child: Text(

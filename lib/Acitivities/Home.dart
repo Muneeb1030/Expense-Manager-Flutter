@@ -43,14 +43,14 @@ class _HomeState extends State<Home> {
   void _StartAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // only work on showModalBottomSheet function
+      isScrollControlled: true,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10), topRight: Radius.circular(10))),
       builder: (context) => Padding(
         padding: MediaQuery.of(context).viewInsets,
         child: Container(
-          height: 300, //height or you can use Get.width-100 to set height
+          height: 300,
           child: NewTransaction(_addNewTransaction),
         ),
       ),
@@ -65,6 +65,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final _mediaQuery = MediaQuery.of(context);
+    bool _showChart = true;
+    bool _isLandscape = _mediaQuery.orientation == Orientation.landscape;
     final _appBar = AppBar(
       title: Text(
         'Expense Manager',
@@ -79,7 +82,6 @@ class _HomeState extends State<Home> {
         ),
       ],
     );
-    final _mediaQuery = MediaQuery.of(context);
     final double _height = _mediaQuery.size.height -
         _appBar.preferredSize.height -
         _mediaQuery.padding.top;
@@ -89,31 +91,39 @@ class _HomeState extends State<Home> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              height: _height * 0.3,
-              child: Chart(_recentTranactions, _height),
-            ),
-            userTransactions.length == 0
-                ? Container(
-                    padding: EdgeInsets.only(top: _height * 0.05),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "No Transections",
-                          style: TextStyle(fontSize: 28),
-                        ),
-                        SizedBox(
-                          height: _height * 0.05,
-                        ),
-                        Image(
-                          image: AssetImage("images/waiting.png"),
-                          height: _height * 0.3,
-                        ),
-                      ],
-                    ),
-                  )
-                : TransactionList(userTransactions, _DeleteTransaction, _height)
+            if (_isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Toggle Chart",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Switch(
+                    value: _showChart,
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            if (!_isLandscape)
+              Container(
+                height: _height * 0.3,
+                child: Chart(_recentTranactions),
+              ),
+            if (!_isLandscape)
+              TransactionList(userTransactions, _DeleteTransaction, _height),
+            if (_isLandscape)
+              _showChart
+                  ? Container(
+                      height: _height * 0.3,
+                      child: Chart(_recentTranactions),
+                    )
+                  : TransactionList(
+                      userTransactions, _DeleteTransaction, _height),
           ],
         ),
       ),

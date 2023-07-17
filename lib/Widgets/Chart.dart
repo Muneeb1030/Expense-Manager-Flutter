@@ -6,8 +6,7 @@ import '../Models/Transection.dart';
 
 class Chart extends StatelessWidget {
   List<Transaction> recentTransactions;
-  final double Height;
-  Chart(this.recentTransactions, this.Height);
+  Chart(this.recentTransactions);
 
   List<Map<String, Object>> get groupedTransactionValues {
     return List.generate(7, (index) {
@@ -39,7 +38,6 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double _height = Height;
     return Container(
       padding: EdgeInsets.all(5),
       child: Card(
@@ -59,8 +57,7 @@ class Chart extends StatelessWidget {
                     data['amount'] as double,
                     totalSpending == 0.0
                         ? 0.0
-                        : (data['amount'] as double) / totalSpending,
-                    _height),
+                        : (data['amount'] as double) / totalSpending),
               );
             }).toList(),
           ),
