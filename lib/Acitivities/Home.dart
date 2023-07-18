@@ -13,6 +13,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool _showChart = true;
   final List<Transaction> userTransactions = [];
   List<Transaction> get _recentTranactions {
     return userTransactions.where(
@@ -66,7 +67,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
-    bool _showChart = true;
+
     bool _isLandscape = _mediaQuery.orientation == Orientation.landscape;
     final _appBar = AppBar(
       title: Text(
@@ -119,7 +120,7 @@ class _HomeState extends State<Home> {
             if (_isLandscape)
               _showChart
                   ? Container(
-                      height: _height * 0.3,
+                      height: _height * 0.8,
                       child: Chart(_recentTranactions),
                     )
                   : TransactionList(
